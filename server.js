@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 // import db from './config/db.js'; 
 import productRoutes from './routes/productRoutes.js';
+import addressRoutes from './routes/ordershippingaddressRoutes.js';
 dotenv.config();
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(cors()); // If needed
 app.use(express.json()); // To parse JSON bodies
 
 app.use('/api/products', productRoutes);
+app.use('/api/order-shipping-addresses', addressRoutes);
 
 app.get('/', (req, res) => {
   res.send(' Backend is running!');
