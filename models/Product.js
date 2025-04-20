@@ -1,3 +1,4 @@
+
 import connection from "../config/db.js";
 
 const Product = {
@@ -52,6 +53,16 @@ const Product = {
             callback(null, rows.length > 0 ? rows[0] : null);
         });
     },
+
+    // Get products by category
+    getByCategory: (categoryId, callback) => {
+        const query = `SELECT * FROM Products WHERE category_id = ?`;
+        connection.query(query, [categoryId], (error, rows) => {
+            if (error) return callback(error, null);
+            callback(null, rows);
+        });
+    },
+
 
     // Delete product
     delete: (id, callback) => {
