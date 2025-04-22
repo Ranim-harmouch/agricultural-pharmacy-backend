@@ -1,3 +1,4 @@
+
 import axios from "axios";
 import multer from "multer";
 import Product from "../models/Product.js";
@@ -30,14 +31,35 @@ const uploadImageToImgBB = (file, callback) => {
 };
 
 // Get all products
+// export const getAllProducts = (req, res) => {
+//     Product.getAll((error, products) => {
+//         if (error) {
+//             return res.status(500).json({ data: null, message: "Failed to retrieve products", error: error.message });
+//         }
+//         res.status(200).json({ data: products, message: "Products retrieved successfully", error: null });
+//     });
+// };
+
 export const getAllProducts = (req, res) => {
-    Product.getAll((error, products) => {
-        if (error) {
-            return res.status(500).json({ data: null, message: "Failed to retrieve products", error: error.message });
-        }
-        res.status(200).json({ data: products, message: "Products retrieved successfully", error: null });
-    });
+    const categoryId = req.query.category_id;
+
+    if (categoryId) {
+        Product.getByCategory(categoryId, (error, products) => {
+            if (error) {
+                return res.status(500).json({ data: null, message: "Failed to retrieve products", error: error.message });
+            }
+            return res.status(200).json({ data: products, message: "Products retrieved successfully", error: null });
+        });
+    } else {
+        Product.getAll((error, products) => {
+            if (error) {
+                return res.status(500).json({ data: null, message: "Failed to retrieve products", error: error.message });
+            }
+            res.status(200).json({ data: products, message: "Products retrieved successfully", error: null });
+        });
+    }
 };
+
 
 // Get product by ID
 export const getProductById = (req, res) => {
