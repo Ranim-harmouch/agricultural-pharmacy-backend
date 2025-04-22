@@ -6,7 +6,13 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import authRoutes from './routes/authRoutes.js';
 import productRoutes from './routes/productRoutes.js';
+
 import orderRoutes from './routes/orderRoutes.js'; 
+
+import addressRoutes from './routes/ordershippingaddressRoutes.js';
+import shipmentRoutes from './routes/shipmentsRoutes.js';
+import orderDetailsRoutes from './routes/orderDetailsRoutes.js';
+
 
 dotenv.config();
 
@@ -19,8 +25,13 @@ app.use(express.json()); // To parse JSON bodies
 app.use(cookieParser());
 
 app.use('/api/products', productRoutes);
+
 app.use('/api/orders', orderRoutes);
-app.use('/api/auth', authRoutes);
+
+app.use('/api/order-shipping-addresses', addressRoutes);
+app.use('/api/shipments', shipmentRoutes);
+app.use('/api/order-details', orderDetailsRoutes);
+
 
 app.get('/', (req, res) => {
   res.send(' Backend is running!');
