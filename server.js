@@ -6,13 +6,12 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import authRoutes from './routes/authRoutes.js';
 import productRoutes from './routes/productRoutes.js';
-
 import orderRoutes from './routes/orderRoutes.js'; 
-
 import addressRoutes from './routes/ordershippingaddressRoutes.js';
 import shipmentRoutes from './routes/shipmentsRoutes.js';
 import orderDetailsRoutes from './routes/orderDetailsRoutes.js';
-
+import Ai from './routes/aiRoute.js';
+import contactRoutes from "./routes/contactRoutes.js";
 
 dotenv.config();
 
@@ -20,7 +19,12 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors()); // If needed
+// app.use(cors()); // If needed
+app.use(cors({
+  origin: 'http://localhost:3000',   // React app’s address
+  credentials: true                  // allow cookies to be sent
+}));
+
 app.use(express.json()); // To parse JSON bodies
 app.use(cookieParser());
 
@@ -32,6 +36,10 @@ app.use('/api/order-shipping-addresses', addressRoutes);
 app.use('/api/shipments', shipmentRoutes);
 app.use('/api/order-details', orderDetailsRoutes);
 
+app.use('/api', authRoutes);
+
+app.use('/api/ai/ask', Ai);
+app.use("/api/contact", contactRoutes);
 
 app.get('/', (req, res) => {
   res.send(' Backend is running!');

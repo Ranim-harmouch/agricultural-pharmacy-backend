@@ -57,9 +57,19 @@ const login = (req, res) => {
       maxAge: 24 * 60 * 60 * 1000,
     });
 
-    res.status(200).json({ message: 'Login successful' });
+    res.status(200).json({
+      data: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role
+      },
+      message: 'Login successful'
+    });
   });
 };
+
+
 
 // Logout
 const logout = (req, res) => {
