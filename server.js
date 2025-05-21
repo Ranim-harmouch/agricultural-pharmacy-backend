@@ -6,7 +6,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import authRoutes from './routes/authRoutes.js';
 import productRoutes from './routes/productRoutes.js';
-import orderRoutes from './routes/orderRoutes.js'; 
+import orderRoutes from './routes/orderRoutes.js';  
 import addressRoutes from './routes/ordershippingaddressRoutes.js';
 import shipmentRoutes from './routes/shipmentsRoutes.js';
 import orderDetailsRoutes from './routes/orderDetailsRoutes.js';
@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 // app.use(cors()); // If needed
 app.use(cors({
-  origin: 'http://localhost:3000',   // React app’s address
+  origin: '*',   // React app’s address
   credentials: true                  // allow cookies to be sent
 }));
 

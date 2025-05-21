@@ -27,7 +27,7 @@ router.get("/:id/user/:userId", getOrderByIdAndUser);
 router.delete("/:id", deleteOrder);
 
 // PUT /api/orders/:id
-router.put('/:id', updateOrder); 
+router.put('/orders/:id', updateOrder); 
 
 
 export default router;

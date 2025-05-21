@@ -1,17 +1,7 @@
 
 import Order from '../models/Order.js';
+import db from '../config/db.js';
 
-// export function createOrder(req, res) {
-//   const { user_id, subtotal_amount, total_amount, order_date, status, orderDetails } = req.body;
-
-//   Order.create(user_id, subtotal_amount, total_amount, order_date, status, orderDetails, (err, order) => {
-//     if (err) {
-//       return res.status(500).json({ message: 'Error creating order', error: err });
-//     }
-
-//     res.status(201).json({ message: 'Order created', data: order });
-//   });
-// }
 
 export function createOrder(req, res) {
   const {
@@ -24,6 +14,7 @@ export function createOrder(req, res) {
     shippingAddress,
     shipmentData
   } = req.body;
+
 
   Order.create(
     user_id,
@@ -82,30 +73,36 @@ export function deleteOrder(req, res) {
     res.json({ message: 'Order deleted', data: result });
   });
 }
+
 export function updateOrder(req, res) {
   const { id } = req.params;
   const { subtotal_amount, total_amount, status } = req.body;
 
-  if (!subtotal_amount || !total_amount || !status) {
-    return res.status(400).json({
-      message: 'Missing required fields',
-      error: 'subtotal_amount, total_amount, and status are required'
-    });
-  }
+  const query = `
+    UPDATE Orders 
+    SET subtotal_amount = ?, total_amount = ?, status = ? 
+    WHERE id = ?
+  `;
 
-  const updateData = { subtotal_amount, total_amount, status };
-
-  Order.update(id, updateData, (err, updatedOrder) => {
+  db.query(query, [subtotal_amount, total_amount, status, id], (err, result) => {
     if (err) {
-      return res.status(500).json({
-        message: 'Error updating order',
-        error: err
-      });
+      return res.status(500).json({ message: 'Error updating order', error: err });
     }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    const updatedOrder = {
+      id: parseInt(id),
+      subtotal_amount,
+      total_amount,
+      status,
+    };
 
     res.json({
       message: 'Order updated successfully',
-      data: updatedOrder
+      data: updatedOrder,
     });
   });
 }
