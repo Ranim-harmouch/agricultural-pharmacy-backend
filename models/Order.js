@@ -53,7 +53,11 @@ create: (user_id, subtotal_amount, total_amount, order_date, status, orderDetail
             VALUES (?, ?, ?, ?)
           `;
 
-          const { shipment_date = new Date().toISOString().split('T')[0], shipment_amount = 0 } = shipmentData || {};
+          // const { shipment_date = new Date().toISOString().split('T')[0], shipment_amount = 0 } = shipmentData || {};
+          const defaultShipment = shipmentData || {};
+          const shipment_date = defaultShipment.shipment_date || new Date().toISOString().split('T')[0];
+          const shipment_amount = defaultShipment.shipment_amount || 0;
+
 
 
           // If shipment_date is missing, set it to the current date
