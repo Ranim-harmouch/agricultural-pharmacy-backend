@@ -31,9 +31,13 @@ create: (user_id, subtotal_amount, total_amount, order_date, status, orderDetail
           VALUES (?, ?, ?, ?, ?, ?)
         `;
 
+        // if (!shippingAddress) {
+        // return res.status(400).json({ message: "Shipping address is required", error: "Missing shippingAddress" });
+        // }
         if (!shippingAddress) {
-        return res.status(400).json({ message: "Shipping address is required", error: "Missing shippingAddress" });
+        return callback({ status: 400, message: "Shipping address is required", error: "Missing shippingAddress" });
         }
+
 
         const { full_address, street_address, department_floor, town_city, email, phone } = shippingAddress;
 

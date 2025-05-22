@@ -22,7 +22,7 @@ const PORT = process.env.PORT || 5000;
 // app.use(cors()); // If needed
 app.use(cors({
   origin: [ 'http://localhost:3000' ,
-  'https://boisterous-zuccutto-c1c010.netlify.app/'], // React app’s address
+  'https://boisterous-zuccutto-c1c010.netlify.app'], // React app’s address
   credentials: true                  // allow cookies to be sent
 }));
 

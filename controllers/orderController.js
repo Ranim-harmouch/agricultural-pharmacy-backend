@@ -26,8 +26,12 @@ export function createOrder(req, res) {
     shippingAddress,
     shipmentData,
     (err, order) => {
+      // if (err) {
+      //   return res.status(500).json({ message: 'Error creating order', error: err });
+      // }
+      // res.status(201).json({ message: 'Order created successfully', data: order });
       if (err) {
-        return res.status(500).json({ message: 'Error creating order', error: err });
+        return res.status(err.status || 500).json({ message: err.message, error: err.error });
       }
       res.status(201).json({ message: 'Order created successfully', data: order });
     }
