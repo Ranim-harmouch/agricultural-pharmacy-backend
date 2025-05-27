@@ -10,7 +10,6 @@ import orderRoutes from './routes/orderRoutes.js';
 import addressRoutes from './routes/ordershippingaddressRoutes.js';
 import shipmentRoutes from './routes/shipmentsRoutes.js';
 import orderDetailsRoutes from './routes/orderDetailsRoutes.js';
-import Ai from './routes/aiRoute.js';
 import contactRoutes from "./routes/contactRoutes.js";
 
 dotenv.config();
@@ -42,7 +41,6 @@ app.use('/api/order-details', orderDetailsRoutes);
 
 app.use('/api', authRoutes);
 
-app.use('/api/ai/ask', Ai);
 app.use("/api/contact", contactRoutes);
 
 app.get('/', (req, res) => {
